@@ -1,6 +1,7 @@
 'use client'
 
 import { useConnect, useConnection, useConnectors, useDisconnect } from 'wagmi'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 function App() {
   const connection = useConnection()
@@ -11,37 +12,11 @@ function App() {
   return (
     <>
       <div>
-        <h2>Connection</h2>
-
-        <div>
-          status: {connection.status}
-          <br />
-          addresses: {JSON.stringify(connection.addresses)}
-          <br />
-          chainId: {connection.chainId}
-        </div>
-
-        {connection.status === 'connected' && (
-          <button type="button" onClick={() => disconnect()}>
-            Disconnect
-          </button>
-        )}
+        <h1 className='text-blue-900 text-3xl'>CrypTip</h1>
       </div>
 
-      <div>
-        <h2>Connect</h2>
-        {connectors.map((connector) => (
-          <button
-            key={connector.uid}
-            onClick={() => connect({ connector })}
-            type="button"
-          >
-            {connector.name}
-          </button>
-        ))}
-        <div>{status}</div>
-        <div>{error?.message}</div>
-      </div>
+      <ConnectButton/>
+
     </>
   )
 }
