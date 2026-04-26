@@ -1,22 +1,25 @@
 'use client'
 
-import { useConnect, useConnection, useConnectors, useDisconnect } from 'wagmi'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import Navbar from '@/components/Navbar'
+import { useEffect } from 'react'
+import { useConnections } from 'wagmi'
+import { useRouter } from 'next/navigation'
 
 function App() {
-  const connection = useConnection()
-  const { connect, status, error } = useConnect()
-  const connectors = useConnectors()
-  const { disconnect } = useDisconnect()
+  const connection = useConnections()
+  const router = useRouter()
+
+  useEffect(() => {
+    if(connection.length > 0) {
+      router.push('/dashboard')
+    }
+  }, [connection, router])
 
   return (
     <>
-      <div>
-        <h1 className='text-blue-900 text-3xl'>CrypTip</h1>
+      <div className='my-5'>
+        <Navbar/>
       </div>
-
-      <ConnectButton/>
-
     </>
   )
 }
