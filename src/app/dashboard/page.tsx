@@ -14,7 +14,7 @@ export default function DashboardPage() {
         <div>
             <h1>Hello User! {address?.slice(0, 10)}...{address?.slice(-6)}</h1>
 
-            <div className="flex gap-8">
+            <div className="flex gap-8 flex-wrap">
                 <TotalEarnedBox value={totalEarned} isLoading={isLoading}/>
                 <TotalTippedBox value={totalTipped} isLoading={isLoading}/>
                 <TotalBalanceBox value={totalBalance} isLoading={isLoading}/>
