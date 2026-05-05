@@ -12,3 +12,9 @@ export interface StatsBox {
     value: string;
     isLoading: boolean;
 }
+
+export interface TipData {
+    name: string;
+    message: string;
+    amount: string;
+}
