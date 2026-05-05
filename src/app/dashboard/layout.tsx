@@ -42,6 +42,10 @@ export default function DashboardLayout({ children }: {children: ReactNode}) {
                         <Link href="/dashboard/link" className={getLinkStyle('/dashboard/link')}>
                             Create Link
                         </Link>
+
+                        <Link href="/dashboard/withdraw" className={getLinkStyle('/dashboard/withdraw')}>
+                            Withdraw Balance
+                        </Link>
                     </nav>
                 </div>
 
