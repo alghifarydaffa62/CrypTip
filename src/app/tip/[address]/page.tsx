@@ -1,11 +1,12 @@
 'use client'
 
-import { useConnection } from "wagmi";
 import { useParams } from 'next/navigation'
+import TipForm from '@/components/TipForm'
+import { Address } from 'viem'
 
 export default function TipPage() {
     const params = useParams()
-    const streamerAddress = params.address as string
+    const streamerAddress = params.address as Address
     
     return(
         <div className="min-h-screen bg-[#CCFF00] flex flex-col items-center justify-center p-6">
@@ -19,9 +20,8 @@ export default function TipPage() {
                     Kirim tip langsung ke dompet tujuan tanpa perantara pihak ketiga.
                 </p>
 
-                {/* Info Target Address */}
                 <div className="space-y-2 mb-8">
-                    <label className="text-xs font-black uppercase tracking-widest text-black">Target Address</label>
+                    <label className="text-xs font-black uppercase tracking-widest text-black">Streamer Address</label>
                     <div className="bg-gray-100 p-4 border-4 border-black rounded-xl">
                         <p className="font-mono text-sm break-all font-bold text-black">
                             {streamerAddress || "Loading..."}
@@ -30,7 +30,7 @@ export default function TipPage() {
                 </div>
 
                 <div className="p-4 border-4 border-dashed border-gray-300 rounded-xl text-center text-gray-500 font-medium">
-                    [ Area Form Input Tip Akan Dibuat Di Sini ]
+                    <TipForm streamerAddress={streamerAddress}/>
                 </div>
 
             </div>
