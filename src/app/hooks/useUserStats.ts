@@ -11,8 +11,12 @@ export default function useUserStats(): UserStats {
     const { data, isLoading, isError, refetch } = useReadContract({
         address: contractAddress,
         abi: CrypTipAbi.abi,
-        functionName: "getUserStats",
+        functionName: "getStreamerStats",
         args: userAddress ? [userAddress] : undefined,
+        query: {
+            enabled: !!userAddress, 
+            refetchInterval: 3000, 
+        }
     })
 
     const stats = data as [bigint, bigint, bigint] | undefined
