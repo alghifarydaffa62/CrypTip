@@ -18,3 +18,11 @@ export interface TipData {
     message: string;
     amount: string;
 }
+
+export interface StatCardProps {
+    label: string
+    value: string
+    isLoading: boolean
+    accent: string
+    icon: React.ReactNode
+}
