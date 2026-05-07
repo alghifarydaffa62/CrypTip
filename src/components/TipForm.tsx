@@ -10,6 +10,8 @@ export default function TipForm({ streamerAddress }: { streamerAddress: Address 
     const [message, setMessage] = useState("")
     const [amount, setAmount] = useState("")
 
+    const { isConnected } = useConnection()
+
     const { sendTip, isWritePending, isConfirming, isConfirmed } = useTip()
 
     useEffect(() => {
