@@ -3,15 +3,12 @@
 import { useState, useEffect } from "react"
 import { Address } from "viem"
 import useTip from "@/app/hooks/useTip"
-import { useConnection } from "wagmi"
 import { Loader2 } from "lucide-react"
 
 export default function TipForm({ streamerAddress }: { streamerAddress: Address }) {
     const [name, setName] = useState("Anonymous")
     const [message, setMessage] = useState("")
     const [amount, setAmount] = useState("")
-
-    const { isConnected } = useConnection()
 
     const { sendTip, isWritePending, isConfirming, isConfirmed } = useTip()
 

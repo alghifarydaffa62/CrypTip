@@ -93,7 +93,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 </nav>
 
                 <div className="px-4 py-4 border-t border-gray-100">
-                    <ConnectButton showBalance={false} chainStatus="icon" accountStatus="avatar" />
+                    <ConnectButton showBalance={false} chainStatus="none" />
                 </div>
             </aside>
 
