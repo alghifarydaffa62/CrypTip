@@ -3,6 +3,13 @@
 import { useConnection } from "wagmi"
 import { useState, useEffect } from "react"
 import { Copy, ExternalLink, Check } from 'lucide-react'
+import { motion } from 'framer-motion'
+
+const fadeUp = (delay = 0) => ({
+    initial: { opacity: 0, y: 10 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.4, delay, ease: [0.23, 1, 0.32, 1] as const }
+} as any)
 
 export default function LinkPage() {
     const { address: userAddress } = useConnection()
@@ -21,51 +28,71 @@ export default function LinkPage() {
         setTimeout(() => setCopied(false), 2000)
     }
 
-    return(
-        <div className="space-y-10">
-            <div className="max-w-2xl">
-                <h1 className="text-4xl font-black text-black uppercase tracking-tighter">Sebarkan Link-mu!</h1>
-                <p className="text-gray-600 mt-2 font-medium">
-                Salin link di bawah ini dan tempelkan di bio sosial media atau deskripsi stream-mu.
+    return (
+        <div className="max-w-2xl">
+            <motion.div {...fadeUp(0)} className="mb-8">
+                <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Your tip link</h1>
+                <p className="text-sm text-gray-400 mt-1">
+                    Share this link in your stream, bio, or anywhere your audience can find it.
                 </p>
-            </div>
+            </motion.div>
 
-            <div className="w-[40vw] h-[20vw] min-h-75 bg-[#CCFF00] border-4 border-black rounded-3xl p-8 [box-shadow:12px_12px_0px_#000] flex flex-col justify-between">
-                <div className="space-y-4">
-                    <label className="text-sm font-black uppercase text-black tracking-widest">Tautan Sawer Pribadi</label>
-                    <div className="bg-white mt-4 border-4 border-black p-4 rounded-xl flex items-center justify-between">
-                        <code className="text-black font-bold truncate mr-4">
-                            {userAddress ? shareLink : 'Menghubungkan dompet...'}
-                            </code>
-                            
-                            <button 
-                            onClick={copyToClipboard}
-                            className="bg-black text-white p-2 rounded-lg hover:scale-110 transition-transform active:scale-95"
-                            >
-                            {copied ? <Check size={20} className="text-green-400" /> : <Copy size={20} />}
-                        </button>
-                    </div>
-                </div>
+            <motion.div {...fadeUp(0.08)} className="bg-white border border-gray-100 rounded-2xl p-6 mb-4">
+                <label className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 block mb-3">
+                    Your personal tip link
+                </label>
 
-                <div className="flex gap-4">
-                    <a 
-                        href={shareLink} 
-                        target="_blank"
-                        className="flex-1 bg-black text-white text-center py-4 rounded-xl font-black uppercase tracking-wider border-4 border-black hover:[box-shadow:4px_4px_0px_#CCFF00] transition-all flex items-center justify-center gap-2"
+                <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 mb-4">
+                    <code className="text-sm text-gray-700 truncate flex-1 font-mono">
+                        {userAddress ? shareLink : 'Connect wallet to generate your link'}
+                    </code>
+                    <button
+                        onClick={copyToClipboard}
+                        disabled={!userAddress}
+                        className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 ${
+                            copied
+                                ? 'bg-green-50 text-green-600 border border-green-200'
+                                : 'bg-[#7C5CFC]/10 text-[#7C5CFC] border border-[#7C5CFC]/20 hover:bg-[#7C5CFC]/15'
+                        } disabled:opacity-40 disabled:cursor-not-allowed`}
                     >
-                        Preview Halaman <ExternalLink size={20} />
-                    </a>
+                        {copied
+                            ? <><Check size={13} /> Copied</>
+                            : <><Copy size={13} /> Copy</>
+                        }
+                    </button>
                 </div>
-            </div>
 
-            <div className="max-w-xl bg-white border-4 border-black p-6 rounded-2xl [box-shadow:6px_6px_0px_#000]">
-                <h3 className="font-black uppercase mb-2 text-black">Cara Pakai:</h3>
-                <ul className="list-disc list-inside space-y-1 text-gray-700 font-medium">
-                <li>Pasang di Bio Instagram/Twitter</li>
-                <li>Gunakan sebagai Link di Twitch/Youtube Overlay</li>
-                <li>Dana akan masuk langsung ke saldo Kryptip-mu</li>
-                </ul>
-            </div>
+                <a
+                    href={shareLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                        userAddress
+                            ? 'bg-[#7C5CFC] text-white hover:bg-[#6d4ef0] hover:shadow-[0_0_20px_rgba(124,92,252,0.3)]'
+                            : 'bg-gray-100 text-gray-400 cursor-not-allowed pointer-events-none'
+                    }`}
+                >
+                    Preview your tip page <ExternalLink size={14} />
+                </a>
+            </motion.div>
+
+            <motion.div {...fadeUp(0.16)} className="bg-white border border-gray-100 rounded-2xl p-6">
+                <h3 className="text-sm font-semibold text-gray-800 mb-4">How to use this link</h3>
+                <div className="flex flex-col gap-3">
+                    {[
+                        { step: '01', text: 'Add it to your Twitch panel, YouTube description, or Instagram bio.' },
+                        { step: '02', text: 'Paste it into your OBS stream overlay as a browser source.' },
+                        { step: '03', text: 'Tips go straight to your balance — withdraw anytime.' },
+                    ].map((item) => (
+                        <div key={item.step} className="flex items-start gap-4">
+                            <span className="text-[10px] font-mono font-bold text-[#7C5CFC] bg-[#7C5CFC]/10 px-2 py-1 rounded-md shrink-0 mt-0.5">
+                                {item.step}
+                            </span>
+                            <p className="text-sm text-gray-500 leading-relaxed">{item.text}</p>
+                        </div>
+                    ))}
+                </div>
+            </motion.div>
         </div>
     )
 }
