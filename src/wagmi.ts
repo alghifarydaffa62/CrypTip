@@ -1,5 +1,6 @@
-import { cookieStorage, createConfig, createStorage, http } from 'wagmi'
+import { cookieStorage, createConfig, createStorage, http, webSocket } from 'wagmi'
 import { mainnet, sepolia } from 'wagmi/chains'
+import { fallback } from 'wagmi'
 
 export function getConfig() {
   return createConfig({
@@ -9,8 +10,11 @@ export function getConfig() {
     }),
     ssr: true,
     transports: {
-      [mainnet.id]: http(),
-      [sepolia.id]: http(),
+      [mainnet.id]: http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`),
+      [sepolia.id]: fallback([
+        webSocket(`wss://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`),
+        http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`),
+      ]),
     },
   })
 }
