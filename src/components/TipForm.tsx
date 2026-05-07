@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { Address } from "viem"
 import useTip from "@/app/hooks/useTip"
+import { useConnection } from "wagmi"
 import { Loader2 } from "lucide-react"
 
 export default function TipForm({ streamerAddress }: { streamerAddress: Address }) {
